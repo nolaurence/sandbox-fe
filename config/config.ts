@@ -2,6 +2,7 @@ import { defineConfig } from "umi";
 import routes from "./routes";
 
 export default defineConfig({
+  // port: 8000,
   hash: false,
   history: {
     type: 'hash',

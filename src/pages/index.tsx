@@ -4,10 +4,9 @@ import ChatBox from '@/components/ChatBox';
 import { createAgent } from '@/services/api/sandbox';
 import { message as antdMessage } from 'antd';
 import ManusLogoTextIcon from '@/components/icons/ManusLogoTextIcon';
-import { Bot } from 'lucide-react';
+import {Bot, PanelLeft} from 'lucide-react';
 import { createStyles } from 'antd-style';
-// import '@/assets/global.css';
-// import '@/assets/theme.css';
+import Panel from '@/components/Panel';
 
 const useStyles = createStyles((utils) => {
   const css = utils.css;
@@ -35,6 +34,21 @@ const useStyles = createStyles((utils) => {
       top: 1rem;
       left: 1.25rem;
       padding-inline-start: 1.75rem;
+    `,
+    panelLeftIcon: css`
+      margin-top: 5px;
+      margin-right: 20px;
+      display: flex;
+      height: 2rem; /* 8 * 0.25cm = 2cm 或使用像素：height: 32px */
+      width: 2rem;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 0.375rem; /* Tailwind 默认 rounded-md 对应值 */
+
+      &:hover {
+        background-color: var(--fill-tsp-gray-main);
+      }
     `,
     chatBoxRoot: css`
       width: 100%;
@@ -110,6 +124,8 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [panelOpen, setPanelOpen] = useState(false);
+  const [panelFixed, setPanelFixed] = useState(false);
 
   const handleSubmit = async () => {
     if (message.trim() && !isSubmitting) {
@@ -129,38 +145,54 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.headerLogoBox}>
-        <div style={{ display: 'flex' }}>
-          <Bot size={38}/>
-          <ManusLogoTextIcon />
-        </div>
+    <>
+      <div onMouseEnter={() => setPanelOpen(true)} onMouseLeave={() => setPanelOpen(false)} >
+        <Panel
+          isOpen={panelOpen}
+          setIsOpen={setPanelOpen}
+          fixed={panelFixed}
+          setFixed={setPanelFixed}
+        />
       </div>
+      <div className={styles.container}>
+        <div className={styles.headerLogoBox}>
+          <div style={{ display: 'flex' }}>
+            <div onClick={() => setPanelFixed(true)} className={styles.panelLeftIcon}>
+              <PanelLeft
+                size={24}
+                // style={{ marginTop: 6, marginRight: 20  }}
+              />
+            </div>
+            <Bot size={36}/>
+            <ManusLogoTextIcon />
+          </div>
+        </div>
 
-      <div className={styles.chatBoxRoot}>
-        <div className={styles.greetingContainer}>
+        <div className={styles.chatBoxRoot}>
+          <div className={styles.greetingContainer}>
             <span className={styles.greetingTextSpan}>
               你好,<br />
               <span style={{ color: 'var(--icon-tertiary)' }}>
                 我能为你做什么？
               </span>
             </span>
-        </div>
+          </div>
 
-        <div className={styles.chatBoxContainer}>
-          <div className={styles.chatBoxInner}>
-            <div className={styles.chatBoxHead} />
-            <ChatBox
-              rows={2}
-              modelValue={message}
-              onUpdateModelValue={(e) => setMessage(e)}
-              onSubmit={handleSubmit}
-              disabled={isSubmitting}
-            />
+          <div className={styles.chatBoxContainer}>
+            <div className={styles.chatBoxInner}>
+              <div className={styles.chatBoxHead} />
+              <ChatBox
+                rows={2}
+                modelValue={message}
+                onUpdateModelValue={(e) => setMessage(e)}
+                onSubmit={handleSubmit}
+                disabled={isSubmitting}
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

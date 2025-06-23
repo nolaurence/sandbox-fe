@@ -6,16 +6,22 @@ import { PanelLeft, Plus, Search } from 'lucide-react';
 interface PanelProps {
   isOpen?: boolean;
   setIsOpen?: (isOpen: boolean) => void;
+  fixed?: boolean;
+  setFixed?: (fixed: boolean) => void;
 }
 
-const Panel: React.FC<PanelProps> = ({ isOpen = false, setIsOpen }) => {
+const Panel: React.FC<PanelProps> = ({ isOpen = false, setIsOpen, fixed = false, setFixed }) => {
   const { styles } = useStyles();
 
   // const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'全部' | '收藏' | '已定时'>('全部');
 
   return (
-    <div className={styles.panelRoot}>
+    /*<div className="h-full flex flex-col" style={  }*/
+    <div
+      className={fixed ? "h-full flex flex-col" : "h-full flex flex-col fixed top-0 start-0 bottom-0 z-[1]"}
+      style={{ width: fixed ? 300 : 24, transition: 'width 0.36s cubic-bezier(0.4, 0, 0.2, 1)'}}
+    >
       <div
         style={{
           display: 'flex',
@@ -60,7 +66,7 @@ const Panel: React.FC<PanelProps> = ({ isOpen = false, setIsOpen }) => {
               }}>
                 <div
                   className={styles.panelLeftIconBox}
-                  onClick={() => setIsOpen?.(!isOpen)}
+                  onClick={() => setFixed?.(!fixed)}
                 >
                   <PanelLeft color={'var(--icon-secondary'} size={24} />
                 </div>
