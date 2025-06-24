@@ -134,36 +134,17 @@ const Home: React.FC = () => {
       >
         <Panel panelWidth={historyPanelWidth} isOpen={panelOpen} fixed={panelFixed} setIsOpen={setPanelOpen} setFixed={setPanelFixed} />
       </div>
-      {/*container: css`
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      flex: 1 1 auto;
-      min-width: 0;
-      width: 100%;
-      max-width: 100%;
-      padding-left: 1.25rem;
-      padding-right: 1.25rem;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 0.5rem;
-      position: relative;
-      margin-left: auto;
-      margin-right: auto;
-      background-color: var(--background-gray-main);
-    `,*/}
       <div
         className={`container mx-auto flex min-h-screen w-full max-w-full flex-col justify-center gap-2 bg-[var(--background-gray-main)] px-5`}
         style={{ paddingLeft: panelFixed ? historyPanelWidth + 20 : 20 }}
       >
-        <div className="absolute top-4 left-5 ps-7" style={{ marginLeft: panelFixed ? historyPanelWidth : 0 }}>
+        <div className="absolute top-4 left-5" style={{ marginLeft: panelFixed ? historyPanelWidth : 0 }}>
           <div style={{ display: 'flex'}}>
-            <div onClick={() => setPanelFixed(!panelFixed)} className={styles.panelLeftIcon}>
-              <PanelLeft
-                size={24}
-                // style={{ marginTop: 6, marginRight: 20  }}
-              />
-            </div>
+            { !panelFixed && (
+              <div onClick={() => setPanelFixed(!panelFixed)} className={styles.panelLeftIcon}>
+                <PanelLeft size={24} />
+              </div>
+            )}
             <Bot size={36}/>
             <ManusLogoTextIcon />
           </div>

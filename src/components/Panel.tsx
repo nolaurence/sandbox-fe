@@ -50,34 +50,22 @@ const Panel: React.FC<PanelProps> = ({panelWidth = 300, isOpen = false, setIsOpe
           }
         }}
       >
-        {/* Header */}
-        <div style={{display: 'flex'}}>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            padding: '0.75rem 1rem',
-            flexDirection: 'column',
-            gap: '0.5rem',
-          }}>
-            <div style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              width: '100%',
-            }}>
-              <div style={{
-                position: 'relative',
-                display: 'flex',
-                alignItems: 'center',
-              }}>
+        {/* header new */}
+        <div className="flex" >
+          <div className="flex items-center px-3 py-3 flex-row h-[52px] gap justify-end w-full" >
+            <div className="flex justify-between w-full px-1 pt-2">
+              <div className="relative flex items-center" >
+                {/*加一层hover效果*/}
                 <div
-                  className={styles.panelLeftIconBox}
+                  className="flex h-7 w-7 items-center justify-center cursor-pointer hover:bg-[var(--fill-tsp-gray-main)] rounded-md"
                   onClick={() => setFixed?.(!fixed)}
                 >
                   <PanelLeft color={'var(--icon-secondary'} size={24}/>
                 </div>
               </div>
-              <div className={styles.searchIconBox}>
-                <div className={styles.searchIcon}>
+              <div className="flex flex-row gap-1" >
+                {/* hover效果*/}
+                <div className="flex h-7 w-7 items-center justify-center cursor-pointer hover:bg-[var(--fill-tsp-gray-main)] rounded-md">
                   <Search size={24} color={'var(--icon-secondary)'}/>
                 </div>
               </div>
