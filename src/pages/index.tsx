@@ -121,6 +121,8 @@ const Home: React.FC = () => {
 
   const { styles } = useStyles();
 
+  const historyPanelWidth: number = 300;
+
   const navigate = useNavigate();
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -145,19 +147,21 @@ const Home: React.FC = () => {
   };
 
   return (
-    <>
-      <div onMouseEnter={() => setPanelOpen(true)} onMouseLeave={() => setPanelOpen(false)} >
-        <Panel
-          isOpen={panelOpen}
-          setIsOpen={setPanelOpen}
-          fixed={panelFixed}
-          setFixed={setPanelFixed}
-        />
+    <div className="relative h-screen bg-[var(--background-gray-main)]" >
+      <div
+        className="absolute top-0 left-0 w-6 h-screen z-10 cursor-pointer"
+        onMouseEnter={() => {
+          if (!panelFixed) {
+            setPanelOpen(true);
+          }
+        }}
+      >
+        <Panel panelWidth={historyPanelWidth} isOpen={panelOpen} fixed={panelFixed} setIsOpen={setPanelOpen} setFixed={setPanelFixed} />
       </div>
-      <div className={styles.container}>
+      <div className={styles.container} style={{ width: panelFixed ? `calc(100% - ${historyPanelWidth}px)` : '100%'}}>
         <div className={styles.headerLogoBox}>
           <div style={{ display: 'flex' }}>
-            <div onClick={() => setPanelFixed(true)} className={styles.panelLeftIcon}>
+            <div onClick={() => setPanelFixed(!panelFixed)} className={styles.panelLeftIcon}>
               <PanelLeft
                 size={24}
                 // style={{ marginTop: 6, marginRight: 20  }}
@@ -170,12 +174,12 @@ const Home: React.FC = () => {
 
         <div className={styles.chatBoxRoot}>
           <div className={styles.greetingContainer}>
-            <span className={styles.greetingTextSpan}>
-              你好,<br />
-              <span style={{ color: 'var(--icon-tertiary)' }}>
-                我能为你做什么？
-              </span>
+          <span className={styles.greetingTextSpan}>
+            你好,<br />
+            <span style={{ color: 'var(--icon-tertiary)' }}>
+              我能为你做什么？
             </span>
+          </span>
           </div>
 
           <div className={styles.chatBoxContainer}>
@@ -192,7 +196,7 @@ const Home: React.FC = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
