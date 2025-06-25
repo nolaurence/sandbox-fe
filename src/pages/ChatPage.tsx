@@ -36,7 +36,9 @@ const ChatComponent: React.FC = () => {
   const [lastNoMessageTool, setLastNoMessageTool] = useState<ToolContent | undefined>(undefined);
   const [agentId, setAgentId] = useState<string>('');
 
+  const panelWidth = 300;
   const [panelOpen, setPanelOpen] = useState<boolean>(false);
+  const [panelFixed, setPanelFixed] = useState<boolean>(false);
 
   // Refs
   const simpleBarRef = useRef<ScrollableContentRef>(null);
@@ -283,7 +285,7 @@ const ChatComponent: React.FC = () => {
 
   return (
     <>
-      <Panel isOpen={panelOpen} setIsOpen={setPanelOpen}/>
+      <Panel panelWidth={panelWidth} isOpen={panelOpen} setIsOpen={setPanelOpen} fixed={panelFixed} setFixed={setPanelFixed}/>
       <SimpleBar ref={simpleBarRef} onScroll={handleScroll}>
         <div style={{
           height: '100%',
@@ -387,8 +389,7 @@ const ChatComponent: React.FC = () => {
                                   <div className={styles.taskProgressFlexBox}>
                                     <span className={styles.taskProgressText}>Task Progress</span>
                                     <div className={styles.taskProgressContainer2}>
-                                                                            <span
-                                                                              className={styles.taskProgressContainer3}>{planProgress()}</span>
+                                      <span className={styles.taskProgressContainer3}>{planProgress()}</span>
                                     </div>
                                   </div>
 
